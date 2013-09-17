@@ -20,12 +20,17 @@ public class nVerseCommandExecutor implements CommandExecutor {
 
 		commands.add(new CreateWorldCommand(plugin));
 		commands.add(new GotoCommand(plugin));
+		commands.add(new HelpCommand());
 	}
 
 	private SubCommand getCommand(String name){
 		for (SubCommand command : commands){
-			if (command.getName().equalsIgnoreCase(name)){
-				return command;
+			String[] names = command.getName().split(",");
+			
+			for (String commandName : names){
+				if (commandName.equalsIgnoreCase(name)){
+					return command;
+				}
 			}
 		}
 
@@ -34,17 +39,13 @@ public class nVerseCommandExecutor implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		if (args.length < 1){
-			//TODO: Display help
-
-			return true;
+			args = new String[]{"help"};
 		}
 
 		SubCommand command = getCommand(args[0]);
 
 		if (command == null){
-			//TODO: Display help
-
-			return true;
+			command = getCommand("help");
 		}
 
 		if (!sender.hasPermission("nVerse.command." + command.getPermission())){
@@ -55,7 +56,7 @@ public class nVerseCommandExecutor implements CommandExecutor {
 
 		//TODO: Console args
 		if (command.getType() == CommandType.PLAYER && !(sender instanceof Player)){
-			Phrase.COMMAND_NOT_CONSOLE.sendWithPrefix(sender, command.getName());
+			Phrase.COMMAND_NOT_CONSOLE.sendWithPrefix(sender, args[0].toLowerCase());
 
 			return true;
 		}

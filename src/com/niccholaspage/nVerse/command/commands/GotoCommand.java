@@ -14,7 +14,7 @@ public class GotoCommand extends SubCommand {
 	private final nVerse plugin;
 
 	public GotoCommand(nVerse plugin) {
-		super("goto", Phrase.COMMAND_GOTO, CommandType.PLAYER);
+		super("goto,tp,teleport", Phrase.COMMAND_GOTO, CommandType.PLAYER);
 
 		this.plugin = plugin;
 	}
@@ -38,6 +38,8 @@ public class GotoCommand extends SubCommand {
 		Player player = (Player) sender;
 		
 		player.teleport(world.getSpawnLocation());
+		
+		Phrase.YOU_HAVE_BEEN_TELEPORTED.sendWithPrefix(sender);
 
 		return true;
 	}
