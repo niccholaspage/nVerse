@@ -7,15 +7,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import com.niccholaspage.nVerse.nVerse;
 import com.niccholaspage.nVerse.command.commands.CreateWorldCommand;
 
 public class nVerseCommandExecutor implements CommandExecutor {
 	private final Set<SubCommand> commands;
 	
-	public nVerseCommandExecutor(){
+	public nVerseCommandExecutor(nVerse plugin){
 		commands = new HashSet<SubCommand>();
 		
-		commands.add(new CreateWorldCommand());
+		commands.add(new CreateWorldCommand(plugin));
 	}
 	
 	private SubCommand getCommand(String name){
@@ -43,7 +44,13 @@ public class nVerseCommandExecutor implements CommandExecutor {
 			return true;
 		}
 		
-		command.onCommand(sender, cmd, commandLabel, args);
+        String[] realArgs = new String[args.length - 1];
+
+        for (int i = 1; i < args.length; i++){
+        	realArgs[i - 1] = args[i];
+        }
+		
+		command.onCommand(sender, cmd, commandLabel, realArgs);
 		
 		return true;
 	}

@@ -13,6 +13,6 @@ public class nVerse extends JavaPlugin {
 
 		saveConfig();
 		
-		getCommand("nverse").setExecutor(new nVerseCommandExecutor());
+		getCommand("nverse").setExecutor(new nVerseCommandExecutor(this));
 	}
 }
