@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public enum Phrase {
+	YOU_DO_NOT_HAVE_PERMISSION_TO_USE_THIS_COMMAND("You do not have permission to use this command."),
+	COMMAND_CREATEWORLD("Creates a world", true),
 	PRIMARY_COLOR(ChatColor.GOLD.toString()),
 	SECONDARY_COLOR(ChatColor.GRAY.toString()),
 	TERTIARY_COLOR(ChatColor.DARK_GRAY.toString()),

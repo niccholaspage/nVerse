@@ -2,6 +2,8 @@ package com.niccholaspage.nVerse;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.niccholaspage.nVerse.command.nVerseCommandExecutor;
+
 public class nVerse extends JavaPlugin {
 	public void onEnable(){
 		getConfig().options().copyDefaults(true);

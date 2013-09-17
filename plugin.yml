@@ -7,8 +7,12 @@ version: 0.1
 load: startup
 
 commands:
-  nverse:
+  nVerse:
     usage: /<command>
     description: nVerse's command
     aliases:
     - nv
+
+permissions:
+  nVerse.command.createworld:
+    description: Allows you to create a world
