@@ -32,6 +32,7 @@ public class API {
 		section.set("pvp", options.getPVP());
 		section.set("difficulty", options.getDifficulty().getValue());
 		section.set("weather", options.getWeather());
+		section.set("keepspawninmemory", options.getKeepSpawnInMemory());
 
 		plugin.saveWorldsConfig();
 
@@ -40,6 +41,8 @@ public class API {
 		world.setPVP(options.getPVP());
 
 		world.setDifficulty(options.getDifficulty());
+		
+		world.setKeepSpawnInMemory(options.getKeepSpawnInMemory());
 
 		return world;
 	}
@@ -65,6 +68,10 @@ public class API {
 
 		if (section.contains("weather")){
 			options.setWeather(section.getBoolean("weather"));
+		}
+		
+		if (section.contains("keepspawninmemory")){
+			options.setKeepSpawnInMemory(section.getBoolean("keepspawninmemory"));
 		}
 
 		return options;
