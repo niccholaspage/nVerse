@@ -3,3 +3,12 @@ name: nVerse
 main: com.niccholaspage.nVerse.nVerse
 
 version: 0.1
+
+load: startup
+
+commands:
+  nverse:
+    usage: /<command>
+    description: nVerse's command
+    aliases:
+    - nv

@@ -10,5 +10,7 @@ public class nVerse extends JavaPlugin {
 				"swag - Swag option");
 
 		saveConfig();
+		
+		getCommand("nverse").setExecutor(new nVerseCommandExecutor());
 	}
 }
