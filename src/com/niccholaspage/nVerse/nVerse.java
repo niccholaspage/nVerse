@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
+import org.bukkit.Difficulty;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.World.Environment;
@@ -15,6 +16,8 @@ import com.niccholaspage.nVerse.command.nVerseCommandExecutor;
 
 public class nVerse extends JavaPlugin {
 	private API api;
+	
+	private YamlConfiguration worldsConfig;
 
 	public void onEnable(){
 		getConfig().options().copyDefaults(true);
@@ -65,12 +68,16 @@ public class nVerse extends JavaPlugin {
 	}
 
 	public YamlConfiguration getWorldsConfig(){
-		return YamlConfiguration.loadConfiguration(getWorldsFile());
+		if (worldsConfig == null){
+			worldsConfig = YamlConfiguration.loadConfiguration(getWorldsFile());
+		}
+		
+		return worldsConfig;
 	}
 	
-	public void saveWorldsConfig(YamlConfiguration config){
+	public void saveWorldsConfig(){
 		try {
-			config.save(getWorldsFile());
+			getWorldsConfig().save(getWorldsFile());
 		} catch (IOException e){
 			e.printStackTrace();
 		}
@@ -124,10 +131,20 @@ public class nVerse extends JavaPlugin {
 				}
 
 				creator.type(type);
-
-				getAPI().createWorld(creator);
 				
-				saveWorldsConfig(worldsConfig);
+				WorldOptions options = new WorldOptions();
+				
+				if (section.contains("pvp")){
+					options.setPVP(section.getBoolean("pvp"));
+				}
+				
+				options.setDifficulty(Difficulty.getByValue(section.getInt("difficulty", -1)));
+				
+				if (section.contains("weather")){
+					options.setWeather(section.getBoolean("weather"));
+				}
+
+				getAPI().createWorld(creator, options);
 			}
 		}
 	}

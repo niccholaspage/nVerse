@@ -13,11 +13,13 @@ public class API {
 	}
 	
 	public World createWorld(WorldCreator creator){
+		return createWorld(creator, new WorldOptions());
+	}
+	
+	public World createWorld(WorldCreator creator, WorldOptions options){
 		YamlConfiguration worldsConfig = plugin.getWorldsConfig();
 		
 		String name = creator.name();
-		
-		worldsConfig.set(name, null);
 		
 		ConfigurationSection section = worldsConfig.createSection(name);
 		
@@ -26,9 +28,20 @@ public class API {
 		//TODO: Figure out generator stuff
 		section.set("seed", creator.seed());
 		section.set("type", creator.type().getName());
+		section.set("pvp", options.getPVP());
+		section.set("difficulty", options.getDifficulty().getValue());
+		section.set("weather", options.getWeather());
 		
-		plugin.saveWorldsConfig(worldsConfig);
+		plugin.saveWorldsConfig();
 		
-		return plugin.getServer().createWorld(creator);
+		World world = plugin.getServer().createWorld(creator);
+		
+		world.setPVP(options.getPVP());
+		
+		world.setDifficulty(options.getDifficulty());
+		
+		//TODO: Add weather
+		
+		return world;
 	}
 }
