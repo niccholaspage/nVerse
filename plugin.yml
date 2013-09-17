@@ -18,3 +18,7 @@ permissions:
     description: Allows you to teleport to a world
   nVerse.command.help:
     description: Allows you to view help
+  nVerse.command.list:
+    description: Allows you to view every world
+  nVerse.bypass:
+    description: Allows you to bypass gamemode switches

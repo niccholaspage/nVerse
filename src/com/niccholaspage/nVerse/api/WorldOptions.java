@@ -1,6 +1,9 @@
-package com.niccholaspage.nVerse;
+package com.niccholaspage.nVerse.api;
 
 import org.bukkit.Difficulty;
+import org.bukkit.GameMode;
+
+import com.niccholaspage.nVerse.nVerse;
 
 public class WorldOptions {
 	private boolean pvp;
@@ -10,8 +13,10 @@ public class WorldOptions {
 	private boolean weather;
 
 	private boolean keepSpawnInMemory;
+	
+	private GameMode gameMode;
 
-	public WorldOptions(){
+	public WorldOptions(nVerse plugin){
 		pvp = true;
 
 		difficulty = Difficulty.EASY;
@@ -19,6 +24,8 @@ public class WorldOptions {
 		weather = true;
 
 		keepSpawnInMemory = true;
+		
+		gameMode = plugin.getServer().getDefaultGameMode();
 	}
 
 	public void setPVP(boolean pvp){
@@ -55,5 +62,13 @@ public class WorldOptions {
 
 	public void setKeepSpawnInMemory(boolean keepSpawnInMemory){
 		this.keepSpawnInMemory = keepSpawnInMemory;
+	}
+	
+	public GameMode getGameMode(){
+		return gameMode;
+	}
+	
+	public void setGameMode(GameMode gameMode){
+		this.gameMode = gameMode;
 	}
 }

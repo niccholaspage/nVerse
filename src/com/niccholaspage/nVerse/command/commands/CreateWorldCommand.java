@@ -2,6 +2,7 @@ package com.niccholaspage.nVerse.command.commands;
 
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -33,8 +34,26 @@ public class CreateWorldCommand extends SubCommand {
 			
 			return true;
 		}
+		
+		String environmentName = args[1];
+		
+		Environment environment = null;
+		
+		for (Environment env : Environment.values()){
+			if (env.name().equalsIgnoreCase(environmentName)){
+				environment = env;
+			}
+		}
+		
+		if (environment == null){
+			Phrase.ENVIRONMENT_DOES_NOT_EXIST.sendWithPrefix(sender);
+			
+			return true;
+		}
 
 		WorldCreator creator = new WorldCreator(name);
+		
+		creator.environment(environment);
 		
 		world = plugin.getAPI().createWorld(creator);
 		

@@ -1,10 +1,13 @@
-package com.niccholaspage.nVerse;
+package com.niccholaspage.nVerse.api;
 
 import org.bukkit.Difficulty;
+import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.niccholaspage.nVerse.nVerse;
 
 public class API {
 	private final nVerse plugin;
@@ -14,7 +17,7 @@ public class API {
 	}
 
 	public World createWorld(WorldCreator creator){
-		return createWorld(creator, new WorldOptions());
+		return createWorld(creator, new WorldOptions(plugin));
 	}
 
 	public World createWorld(WorldCreator creator, WorldOptions options){
@@ -33,6 +36,7 @@ public class API {
 		section.set("difficulty", options.getDifficulty().getValue());
 		section.set("weather", options.getWeather());
 		section.set("keepspawninmemory", options.getKeepSpawnInMemory());
+		section.set("gamemode", options.getGameMode().getValue());
 
 		plugin.saveWorldsConfig();
 
@@ -52,7 +56,7 @@ public class API {
 	}
 
 	public WorldOptions getWorldOptions(String name){
-		WorldOptions options = new WorldOptions();
+		WorldOptions options = new WorldOptions(plugin);
 
 		ConfigurationSection section = plugin.getWorldsConfig().getConfigurationSection(name);
 
@@ -73,6 +77,8 @@ public class API {
 		if (section.contains("keepspawninmemory")){
 			options.setKeepSpawnInMemory(section.getBoolean("keepspawninmemory"));
 		}
+		
+		options.setGameMode(GameMode.getByValue(section.getInt("gamemode", 0)));
 
 		return options;
 	}

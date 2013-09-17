@@ -11,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.niccholaspage.nVerse.api.API;
 import com.niccholaspage.nVerse.command.nVerseCommandExecutor;
 
 public class nVerse extends JavaPlugin {
@@ -29,7 +30,7 @@ public class nVerse extends JavaPlugin {
 
 		reloadWorlds();
 		
-		new nVerseWeatherListener(this);
+		new nVerseListener(this);
 
 		getCommand("nverse").setExecutor(new nVerseCommandExecutor(this));
 	}
