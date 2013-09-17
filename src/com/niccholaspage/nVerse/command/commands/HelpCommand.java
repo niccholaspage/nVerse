@@ -8,7 +8,7 @@ import com.niccholaspage.nVerse.command.SubCommand;
 
 public class HelpCommand extends SubCommand {
 	public HelpCommand() {
-		super("help,?", Phrase.COMMAND_HELP);
+		super("help,?", Phrase.COMMAND_HELP, "");
 	}
 	
 	public boolean run(CommandSender sender, Command cmd, String commandLabel, String[] args){

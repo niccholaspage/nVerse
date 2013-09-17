@@ -4,8 +4,6 @@ main: com.niccholaspage.nVerse.nVerse
 
 version: 0.1
 
-load: startup
-
 commands:
   nVerse:
     usage: /<command>

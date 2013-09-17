@@ -67,7 +67,9 @@ public class nVerseCommandExecutor implements CommandExecutor {
 			realArgs[i - 1] = args[i];
 		}
 
-		command.run(sender, cmd, commandLabel, realArgs);
+		if (!command.run(sender, cmd, commandLabel, realArgs)){
+			Phrase.TRY_COMMAND.sendWithPrefix(sender, "/" + commandLabel.toLowerCase() + " " + args[0].toLowerCase() + " " + command.getHelp());
+		}
 
 		return true;
 	}

@@ -13,14 +13,14 @@ public class CreateWorldCommand extends SubCommand {
 	private final nVerse plugin;
 
 	public CreateWorldCommand(nVerse plugin) {
-		super("createworld", Phrase.COMMAND_CREATEWORLD);
+		super("createworld", Phrase.COMMAND_CREATEWORLD, "[name] [environment]");
 
 		this.plugin = plugin;
 	}
 
 	@Override
 	public boolean run(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if (args.length < 1){
+		if (args.length < 2){
 			return false;
 		}
 		
@@ -36,9 +36,9 @@ public class CreateWorldCommand extends SubCommand {
 
 		WorldCreator creator = new WorldCreator(name);
 		
-		plugin.getServer().createWorld(creator);
+		world = plugin.getAPI().createWorld(creator);
 		
-		Phrase.YOU_HAVE_CREATED_WORLD.sendWithPrefix(sender, creator.name());
+		Phrase.YOU_HAVE_CREATED_WORLD.sendWithPrefix(sender, world.getName());
 
 		return true;
 	}

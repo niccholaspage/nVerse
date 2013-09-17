@@ -12,22 +12,26 @@ public abstract class SubCommand {
 
 	private final String permission;
 	
+	private final String help;
+	
 	private final CommandType type;
 	
-	public SubCommand(String name, Phrase description){
-		this(name, description, name, CommandType.CONSOLE);
+	public SubCommand(String name, Phrase description, String help){
+		this(name, description, name, CommandType.CONSOLE, help);
 	}
 	
-	public SubCommand(String name, Phrase description, CommandType type){
-		this(name, description, name, type);
+	public SubCommand(String name, Phrase description, CommandType type, String help){
+		this(name, description, name, type, help);
 	}
 
-	public SubCommand(String name, Phrase description, String permission, CommandType type){
+	public SubCommand(String name, Phrase description, String permission, CommandType type, String help){
 		this.name = name;
 
 		this.description = description;
 
 		this.permission = permission;
+		
+		this.help = help;
 		
 		this.type = type;
 	}
@@ -42,6 +46,10 @@ public abstract class SubCommand {
 	
 	public String getPermission(){
 		return permission;
+	}
+	
+	public String getHelp(){
+		return help;
 	}
 	
 	public CommandType getType(){

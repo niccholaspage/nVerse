@@ -10,6 +10,7 @@ public enum Phrase {
 	WORLD_DOES_NOT_EXIST("That world does not exist."),
 	YOU_HAVE_BEEN_TELEPORTED("You have been teleported to $1."),
 	COMMAND_NOT_CONSOLE("The command '$1' cannot be used in the console."),
+	TRY_COMMAND("Try $1"),
 	COMMAND_CREATEWORLD("Creates a world", true),
 	COMMAND_GOTO("Teleports you to a world", true),
 	COMMAND_HELP("Displays help", true),
