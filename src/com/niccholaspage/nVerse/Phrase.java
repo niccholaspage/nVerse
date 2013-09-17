@@ -6,7 +6,11 @@ import org.bukkit.command.CommandSender;
 public enum Phrase {
 	YOU_DO_NOT_HAVE_PERMISSION_TO_USE_THIS_COMMAND("You do not have permission to use this command."),
 	YOU_HAVE_CREATED_WORLD("You have created $1."),
+	WORLD_ALREADY_EXISTS("That world already exists."),
+	WORLD_DOES_NOT_EXIST("That world does not exist."),
+	COMMAND_NOT_CONSOLE("The command '$1' cannot be used in the console."),
 	COMMAND_CREATEWORLD("Creates a world", true),
+	COMMAND_GOTO("Teleports you to a world", true),
 	PRIMARY_COLOR(ChatColor.GOLD.toString()),
 	SECONDARY_COLOR(ChatColor.GRAY.toString()),
 	TERTIARY_COLOR(ChatColor.DARK_GRAY.toString()),
@@ -71,7 +75,7 @@ public enum Phrase {
 	public String parseWithPrefix(Object... params) {
 		String third = Phrase.TERTIARY_COLOR.parse();
 
-		return third + "[" + Phrase.PRIMARY_COLOR.parse() + "nVerse" + third + "] " + Phrase.SECONDARY_COLOR.parse();
+		return third + "[" + Phrase.PRIMARY_COLOR.parse() + "nVerse" + third + "] " + Phrase.SECONDARY_COLOR.parse() + parse(params);
 	}
 
 	public void send(CommandSender sender, Object... params) {
