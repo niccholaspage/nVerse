@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import org.bukkit.Difficulty;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.World.Environment;
@@ -131,20 +130,8 @@ public class nVerse extends JavaPlugin {
 				}
 
 				creator.type(type);
-				
-				WorldOptions options = new WorldOptions();
-				
-				if (section.contains("pvp")){
-					options.setPVP(section.getBoolean("pvp"));
-				}
-				
-				options.setDifficulty(Difficulty.getByValue(section.getInt("difficulty", -1)));
-				
-				if (section.contains("weather")){
-					options.setWeather(section.getBoolean("weather"));
-				}
 
-				getAPI().createWorld(creator, options);
+				getAPI().createWorld(creator, getAPI().getWorldOptions(world));
 			}
 		}
 	}
