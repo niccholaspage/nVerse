@@ -28,6 +28,8 @@ public class nVerse extends JavaPlugin {
 		api = new API(this);
 
 		reloadWorlds();
+		
+		new nVerseWeatherListener(this);
 
 		getCommand("nverse").setExecutor(new nVerseCommandExecutor(this));
 	}

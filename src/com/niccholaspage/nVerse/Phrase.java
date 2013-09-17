@@ -14,6 +14,7 @@ public enum Phrase {
 	COMMAND_CREATEWORLD("Creates a world", true),
 	COMMAND_GOTO("Teleports you to a world", true),
 	COMMAND_HELP("Displays help", true),
+	COMMAND_LIST("Lists every world", true),
 	PRIMARY_COLOR(ChatColor.GOLD.toString()),
 	SECONDARY_COLOR(ChatColor.GRAY.toString()),
 	TERTIARY_COLOR(ChatColor.DARK_GRAY.toString()),

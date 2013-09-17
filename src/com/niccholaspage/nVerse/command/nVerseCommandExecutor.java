@@ -21,6 +21,7 @@ public class nVerseCommandExecutor implements CommandExecutor {
 		commands.add(new CreateWorldCommand(plugin));
 		commands.add(new GotoCommand(plugin));
 		commands.add(new HelpCommand());
+		commands.add(new ListCommand(plugin));
 	}
 
 	private SubCommand getCommand(String name){
