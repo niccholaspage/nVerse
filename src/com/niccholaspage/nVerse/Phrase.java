@@ -8,6 +8,8 @@ public enum Phrase {
 	YOU_HAVE_CREATED_WORLD("You have created $1."),
 	WORLD_ALREADY_EXISTS("That world already exists."),
 	WORLD_DOES_NOT_EXIST("That world does not exist."),
+	WORLD_HAS_BEEN_DELETED("$1 has been deleted. Please restart the server to remove the world from memory."),
+	CANNOT_DELETE_DEFAULT_WORLDS("You cannot delete default worlds."),
 	YOU_HAVE_BEEN_TELEPORTED("You have been teleported to $1."),
 	COMMAND_NOT_CONSOLE("The command '$1' cannot be used in the console."),
 	ENVIRONMENT_DOES_NOT_EXIST("That environment does not exist."),

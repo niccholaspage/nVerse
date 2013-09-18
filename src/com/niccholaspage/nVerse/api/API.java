@@ -52,6 +52,30 @@ public class API {
 		return world;
 	}
 
+	public boolean removeWorld(String name){
+		if (isDefaultWorld(name)){
+			return false;
+		}
+
+		YamlConfiguration worldsConfig = plugin.getWorldsConfig();
+
+		if (!worldsConfig.contains(name)){
+			return false;
+		}
+
+		World world = plugin.getServer().getWorld(name);
+
+		if (world == null){
+			return false;
+		}
+
+		worldsConfig.set(name, null);
+
+		plugin.saveConfig();
+
+		return true;
+	}
+
 	public WorldOptions getWorldOptions(World world){
 		return getWorldOptions(world.getName());
 	}
@@ -84,5 +108,21 @@ public class API {
 		options.setRespawnWorld(section.getString("respawnworld"));
 
 		return options;
+	}
+
+	public boolean isDefaultWorld(String name){
+		//TODO: Fix this, nether and end return false for some reason
+
+		String defaultWorld = plugin.getServer().getWorlds().get(0).getName();
+
+		String netherWorld = defaultWorld + "_nether";
+
+		String endWorld = defaultWorld + "_the_end";
+
+		if (defaultWorld.equals(name) || netherWorld.equals(name + "_nether") || endWorld.equals(name + "_the_end")){
+			return true;
+		}
+
+		return false;
 	}
 }
