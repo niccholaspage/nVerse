@@ -17,6 +17,10 @@ public class WorldOptions {
 	private GameMode gameMode;
 	
 	private String respawnWorld;
+	
+	private boolean spawnAnimals;
+	
+	private boolean spawnMonsters;
 
 	public WorldOptions(nVerse plugin){
 		pvp = true;
@@ -30,6 +34,10 @@ public class WorldOptions {
 		gameMode = plugin.getServer().getDefaultGameMode();
 		
 		respawnWorld = "";
+		
+		spawnAnimals = true;
+		
+		spawnMonsters = true;
 	}
 
 	public void setPVP(boolean pvp){
@@ -86,5 +94,21 @@ public class WorldOptions {
 		}
 		
 		this.respawnWorld = respawnWorld;
+	}
+	
+	public boolean getSpawnAnimals(){
+		return spawnAnimals;
+	}
+	
+	public void setSpawnAnimals(boolean spawnAnimals){
+		this.spawnAnimals = spawnAnimals;
+	}
+	
+	public boolean getSpawnMonsters(){
+		return spawnMonsters;
+	}
+	
+	public void setSpawnMonsters(boolean spawnMonsters){
+		this.spawnMonsters = spawnMonsters;
 	}
 }

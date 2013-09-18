@@ -38,6 +38,8 @@ public class API {
 		section.set("keepspawninmemory", options.getKeepSpawnInMemory());
 		section.set("gamemode", options.getGameMode().getValue());
 		section.set("respawnworld", options.getRespawnWorld());
+		section.set("spawnanimals", options.getSpawnAnimals());
+		section.set("spawnmonsters", options.getSpawnMonsters());
 
 		plugin.saveWorldsConfig();
 
@@ -106,6 +108,14 @@ public class API {
 		options.setGameMode(GameMode.getByValue(section.getInt("gamemode", 0)));
 
 		options.setRespawnWorld(section.getString("respawnworld"));
+		
+		if (section.contains("spawnanimals")){
+			options.setSpawnAnimals(section.getBoolean("spawnanimals"));
+		}
+		
+		if (section.contains("spawnmonsters")){
+			options.setSpawnMonsters(section.getBoolean("spawnmonsters"));
+		}
 
 		return options;
 	}

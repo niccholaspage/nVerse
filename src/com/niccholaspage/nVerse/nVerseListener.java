@@ -1,9 +1,12 @@
 package com.niccholaspage.nVerse;
 
 import org.bukkit.World;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -58,5 +61,40 @@ public class nVerseListener implements Listener {
 		if (world != null){
 			event.setRespawnLocation(world.getSpawnLocation());
 		}
+	}
+	
+	@EventHandler
+	public void onCreatureSpawnEvent(CreatureSpawnEvent event){
+		if (event.isCancelled() || event.getSpawnReason() != SpawnReason.NATURAL){
+			return;
+		}
+		
+		WorldOptions options = plugin.getAPI().getWorldOptions(event.getLocation().getWorld());
+		
+		EntityType type = event.getEntityType();
+		
+		if (isPeaceful(type)){
+			if (!options.getSpawnAnimals()){
+				event.setCancelled(true);
+			}
+		}else {
+			if (!options.getSpawnMonsters()){
+				event.setCancelled(true);
+			}
+		}
+	}
+	
+	private boolean isPeaceful(EntityType type){
+		return type == EntityType.BAT ||
+				type == EntityType.CHICKEN ||
+				type == EntityType.COW ||
+				type == EntityType.MUSHROOM_COW ||
+				type == EntityType.HORSE ||
+				type == EntityType.OCELOT ||
+				type == EntityType.PIG ||
+				type == EntityType.SHEEP ||
+				type == EntityType.SNOWMAN ||
+				type == EntityType.SQUID ||
+				type == EntityType.VILLAGER;
 	}
 }
