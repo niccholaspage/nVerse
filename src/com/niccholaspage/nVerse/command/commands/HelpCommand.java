@@ -1,5 +1,10 @@
 package com.niccholaspage.nVerse.command.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,7 +30,16 @@ public class HelpCommand extends SubCommand {
 		
 		sender.sendMessage(textColor + Phrase.HELP_ARGUMENTS.parse(operatorColor + "[]" + textColor, operatorColor + "()" + textColor));
 		
-		for (SubCommand command : this.command.getCommands()){
+		List<SubCommand> commands = new ArrayList<SubCommand>(command.getCommands());
+		
+		Collections.sort(commands, new Comparator<SubCommand>(){
+			@Override
+			public int compare(SubCommand command1, SubCommand command2) {
+				return command1.getDisplayName().compareTo(command2.getDisplayName());
+			}
+		});
+		
+		for (SubCommand command : commands){
 			if (command.getName().equalsIgnoreCase(getName())){
 				continue;
 			}
