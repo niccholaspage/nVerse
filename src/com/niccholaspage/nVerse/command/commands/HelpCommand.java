@@ -2,19 +2,52 @@ package com.niccholaspage.nVerse.command.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.niccholaspage.nVerse.Phrase;
+import com.niccholaspage.nVerse.command.CommandType;
 import com.niccholaspage.nVerse.command.SubCommand;
+import com.niccholaspage.nVerse.command.nVerseCommandExecutor;
 
 public class HelpCommand extends SubCommand {
-	public HelpCommand() {
-		super("help,?", Phrase.COMMAND_HELP, "");
+	private final nVerseCommandExecutor command;
+	
+	public HelpCommand(nVerseCommandExecutor command){
+		super("?,help", Phrase.COMMAND_HELP, "");
+		
+		this.command = command;
 	}
 	
 	public boolean run(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		//TODO: Make help
+		String operatorColor = Phrase.TERTIARY_COLOR.parse();
 		
-		sender.sendMessage("help");
+		String textColor = Phrase.SECONDARY_COLOR.parse();
+		
+		sender.sendMessage(textColor + Phrase.HELP_ARGUMENTS.parse(operatorColor + "[]" + textColor, operatorColor + "()" + textColor));
+		
+		for (SubCommand command : this.command.getCommands()){
+			if (command.getName().equalsIgnoreCase(getName())){
+				continue;
+			}
+			
+			if (!sender.hasPermission("nVerse.command." + command.getPermission())){
+				continue;
+			}
+			
+			if (!(sender instanceof Player) && command.getType() == CommandType.PLAYER){
+				continue;
+			}
+			
+			String message = Phrase.ARGUMENT_COLOR.parse() + commandLabel.toLowerCase() + " " + command.getDisplayName() + " " + command.getHelp() + " - " + command.getDescription().parse();
+			
+			if (sender instanceof Player){
+				message = Phrase.ARGUMENT_COLOR.parse() + "/" + message;
+			}else {
+				message = Phrase.ARGUMENT_COLOR.parse() + message;
+			}
+			
+			sender.sendMessage(message);
+		}
 		
 		return true;
 	}

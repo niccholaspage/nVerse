@@ -15,6 +15,7 @@ public enum Phrase {
 	ENVIRONMENT_DOES_NOT_EXIST("That environment does not exist."),
 	WORLD_TYPE_DOES_NOT_EXIST("That world type does not exist."),
 	TRY_COMMAND("Try $1"),
+	HELP_ARGUMENTS("$1 Required, $2 Optional"),
 	COMMAND_CREATE("Creates a world", true),
 	COMMAND_GOTO("Teleports you to a world", true),
 	COMMAND_HELP("Displays help", true),

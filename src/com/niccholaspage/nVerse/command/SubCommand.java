@@ -40,6 +40,10 @@ public abstract class SubCommand {
 		return name;
 	}
 	
+	public String getDisplayName(){
+		return name.split(",")[0];
+	}
+	
 	public Phrase getDescription(){
 		return description;
 	}

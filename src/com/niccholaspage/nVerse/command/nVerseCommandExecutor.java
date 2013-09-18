@@ -20,7 +20,7 @@ public class nVerseCommandExecutor implements CommandExecutor {
 
 		commands.add(new CreateCommand(plugin));
 		commands.add(new GotoCommand(plugin));
-		commands.add(new HelpCommand());
+		commands.add(new HelpCommand(this));
 		commands.add(new ListCommand(plugin));
 		commands.add(new RemoveCommand(plugin));
 	}
@@ -37,6 +37,10 @@ public class nVerseCommandExecutor implements CommandExecutor {
 		}
 
 		return null;
+	}
+	
+	public Set<SubCommand> getCommands(){
+		return commands;
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){

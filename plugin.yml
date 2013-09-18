@@ -22,16 +22,18 @@ permissions:
     description: Allows you to view every world
   nVerse.command.remove:
     description: Allows you to remove worlds
+  nVerse.command.?:
+    description: Allows you to view help
   nVerse.bypass:
     description: Allows you to bypass gamemode switches
   nVerse.command.*:
     children:
-      nVerse.command.create
-      nVerse.command.goto
-      nVerse.command.help
-      nVerse.command.list
-      nVerse.command.remove
+      nVerse.command.create: true
+      nVerse.command.goto: true
+      nVerse.command.?: true
+      nVerse.command.list: true
+      nVerse.command.remove: true
   nVerse.admin:
     children:
-      nVerse.command.*
-      nVerse.bypass
+      nVerse.command.*: true
+      nVerse.bypass: true
