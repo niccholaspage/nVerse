@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
+import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.World.Environment;
@@ -16,7 +17,7 @@ import com.niccholaspage.nVerse.command.nVerseCommandExecutor;
 
 public class nVerse extends JavaPlugin {
 	private API api;
-	
+
 	private YamlConfiguration worldsConfig;
 
 	public void onEnable(){
@@ -29,7 +30,7 @@ public class nVerse extends JavaPlugin {
 		api = new API(this);
 
 		reloadWorlds();
-		
+
 		new nVerseListener(this);
 
 		getCommand("nverse").setExecutor(new nVerseCommandExecutor(this));
@@ -41,6 +42,10 @@ public class nVerse extends JavaPlugin {
 
 	public void reloadConfig(){
 		super.reloadConfig();
+
+		if (worldsConfig != null){
+			reloadWorlds();
+		}
 
 		File phrasesFile = new File(getDataFolder(), "phrases.yml");
 
@@ -68,15 +73,19 @@ public class nVerse extends JavaPlugin {
 	private File getWorldsFile(){
 		return new File(getDataFolder(), "worlds.yml");
 	}
-
+	
 	public YamlConfiguration getWorldsConfig(){
 		if (worldsConfig == null){
-			worldsConfig = YamlConfiguration.loadConfiguration(getWorldsFile());
+			reloadWorldsConfig();
 		}
 		
-		return worldsConfig;
+		return YamlConfiguration.loadConfiguration(getWorldsFile());
 	}
 	
+	private void reloadWorldsConfig(){
+		worldsConfig = YamlConfiguration.loadConfiguration(getWorldsFile());
+	}
+
 	public void saveWorldsConfig(){
 		try {
 			getWorldsConfig().save(getWorldsFile());
@@ -86,53 +95,67 @@ public class nVerse extends JavaPlugin {
 	}
 
 	public void reloadWorlds(){
-		File worldsFile = getWorldsFile();
+		YamlConfiguration worldsConfig = getWorldsConfig();
 
-		if (worldsFile.exists()){
-			YamlConfiguration worldsConfig = getWorldsConfig();
+		Set<String> worlds = worldsConfig.getKeys(false);
 
-			Set<String> worlds = worldsConfig.getKeys(false);
+		for (String world : worlds){
+			ConfigurationSection section = worldsConfig.getConfigurationSection(world);
 
-			for (String world : worlds){
-				ConfigurationSection section = worldsConfig.getConfigurationSection(world);
+			WorldCreator creator = new WorldCreator(world);
 
-				WorldCreator creator = new WorldCreator(world);
+			String environmentName = section.getString("environment");
 
-				String environmentName = section.getString("environment");
+			Environment environment = null;
 
-				Environment environment = null;
+			for (Environment env : Environment.values()){
+				if (env.name().equalsIgnoreCase(environmentName)){
+					environment = env;
 
-				for (Environment env : Environment.values()){
-					if (env.name().equalsIgnoreCase(environmentName)){
-						environment = env;
-
-						break;
-					}
+					break;
 				}
+			}
 
-				if (environment == null){
-					environment = Environment.NORMAL;
-				}
+			if (environment == null){
+				environment = Environment.NORMAL;
+			}
 
-				creator.environment(environment);
+			creator.environment(environment);
 
-				boolean generateStructures = section.getBoolean("generatestructures", true);
+			boolean generateStructures = section.getBoolean("generatestructures", true);
 
-				creator.generateStructures(generateStructures);
+			creator.generateStructures(generateStructures);
 
-				long seed = section.getLong("seed");
+			long seed = section.getLong("seed");
 
-				creator.seed(seed);
+			creator.seed(seed);
 
-				String typeName = section.getString("type");
+			String typeName = section.getString("type");
 
-				WorldType type = WorldType.getByName(typeName);
+			WorldType type = WorldType.getByName(typeName);
 
-				if (type == null){
-					type = WorldType.NORMAL;
-				}
+			if (type == null){
+				type = WorldType.NORMAL;
+			}
 
-				creator.type(type);
+			creator.type(type);
+
+			getAPI().createWorld(creator, getAPI().getWorldOptions(world));
+		}
+
+		for (World world : getServer().getWorlds()){
+			String name = world.getName();
+
+			if (!worldsConfig.contains(name)){
+				WorldCreator creator = new WorldCreator(name);
+
+				creator.environment(world.getEnvironment());
+
+				creator.generateStructures(world.canGenerateStructures());
+
+				creator.seed(world.getSeed());
+
+				creator.type(world.getWorldType());
 
 				getAPI().createWorld(creator, getAPI().getWorldOptions(world));
 			}

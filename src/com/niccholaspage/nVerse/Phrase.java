@@ -23,6 +23,8 @@ public enum Phrase {
 	COMMAND_GOTO("Teleports you to a world", true),
 	COMMAND_HELP("Displays help", true),
 	COMMAND_LIST("Lists every world", true),
+	COMMAND_RELOAD("Reloads the configuration", true),
+	CONFIG_HAS_BEEN_RELOADED("The config has been reloaded."),
 	PRIMARY_COLOR(ChatColor.GOLD.toString()),
 	SECONDARY_COLOR(ChatColor.GRAY.toString()),
 	TERTIARY_COLOR(ChatColor.DARK_GRAY.toString()),

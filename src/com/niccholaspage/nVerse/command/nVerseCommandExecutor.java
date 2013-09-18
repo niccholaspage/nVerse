@@ -23,6 +23,7 @@ public class nVerseCommandExecutor implements CommandExecutor {
 		commands.add(new HelpCommand(this));
 		commands.add(new ListCommand(plugin));
 		commands.add(new RemoveCommand(plugin));
+		commands.add(new ReloadCommand(plugin));
 	}
 
 	private SubCommand getCommand(String name){
