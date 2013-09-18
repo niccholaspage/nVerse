@@ -1,7 +1,6 @@
 package com.niccholaspage.nVerse.command.commands;
 
 import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.command.Command;
@@ -9,6 +8,7 @@ import org.bukkit.command.CommandSender;
 
 import com.niccholaspage.nVerse.Phrase;
 import com.niccholaspage.nVerse.nVerse;
+import com.niccholaspage.nVerse.api.WorldOptions;
 import com.niccholaspage.nVerse.command.SubCommand;
 
 public class CreateCommand extends SubCommand {
@@ -64,13 +64,13 @@ public class CreateCommand extends SubCommand {
 			}
 		}
 
-		WorldCreator creator = new WorldCreator(name);
+		WorldOptions options = new WorldOptions();
 		
-		creator.environment(environment);
+		options.setEnvironment(environment);
 		
-		creator.type(type);
+		options.setType(type);
 		
-		world = plugin.getAPI().createWorld(creator);
+		world = plugin.getAPI().createWorld(name, options);
 		
 		Phrase.YOU_HAVE_CREATED_WORLD.sendWithPrefix(sender, world.getName());
 

@@ -1,11 +1,22 @@
 package com.niccholaspage.nVerse.api;
 
+import java.util.Random;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
-
-import com.niccholaspage.nVerse.nVerse;
+import org.bukkit.World.Environment;
+import org.bukkit.WorldType;
 
 public class WorldOptions {
+	private Environment environment;
+	
+	private boolean generateStructures;
+	
+	private long seed;
+	
+	private WorldType type;
+	
 	private boolean pvp;
 
 	private Difficulty difficulty;
@@ -22,7 +33,15 @@ public class WorldOptions {
 	
 	private boolean spawnMonsters;
 
-	public WorldOptions(nVerse plugin){
+	public WorldOptions(){
+		environment = Environment.NORMAL;
+		
+		generateStructures = true;
+		
+		seed = new Random().nextLong();
+		
+		type = WorldType.NORMAL;
+		
 		pvp = true;
 
 		difficulty = Difficulty.EASY;
@@ -31,13 +50,53 @@ public class WorldOptions {
 
 		keepSpawnInMemory = true;
 		
-		gameMode = plugin.getServer().getDefaultGameMode();
+		gameMode = Bukkit.getDefaultGameMode();
 		
 		respawnWorld = "";
 		
 		spawnAnimals = true;
 		
 		spawnMonsters = true;
+	}
+	
+	public void setEnvironment(Environment environment){
+		if (environment == null){
+			environment = Environment.NORMAL;
+		}
+		
+		this.environment = environment;
+	}
+	
+	public Environment getEnvironment(){
+		return environment;
+	}
+	
+	public void setGenerateStructures(boolean generateStructures){
+		this.generateStructures = generateStructures;
+	}
+	
+	public boolean canGenerateStructures(){
+		return generateStructures;
+	}
+	
+	public void setSeed(long seed){
+		this.seed = seed;
+	}
+	
+	public long getSeed(){
+		return seed;
+	}
+	
+	public void setType(WorldType type){
+		if (type == null){
+			type = WorldType.NORMAL;
+		}
+		
+		this.type = type;
+	}
+	
+	public WorldType getType(){
+		return type;
 	}
 
 	public void setPVP(boolean pvp){

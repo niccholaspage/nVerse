@@ -15,17 +15,22 @@ public class API {
 	public API(nVerse plugin){
 		this.plugin = plugin;
 	}
-
-	public World createWorld(WorldCreator creator){
-		return createWorld(creator, new WorldOptions(plugin));
+	
+	public void createWorld(World world){
+		createWorld(world.getName(), getWorldOptions(world));
 	}
 
-	public World createWorld(WorldCreator creator, WorldOptions options){
+	public World createWorld(String name, WorldOptions options){
 		YamlConfiguration worldsConfig = plugin.getWorldsConfig();
 
-		String name = creator.name();
-
 		ConfigurationSection section = worldsConfig.createSection(name);
+		
+		WorldCreator creator = new WorldCreator(name);
+		
+		creator.environment(options.getEnvironment());
+		creator.generateStructures(options.canGenerateStructures());
+		creator.seed(options.getSeed());
+		creator.type(options.getType());
 
 		section.set("environment", creator.environment().name());
 		section.set("generatestructures", creator.generateStructures());
@@ -54,7 +59,9 @@ public class API {
 		return world;
 	}
 
-	public boolean removeWorld(String name){
+	public boolean removeWorld(World world){
+		String name = world.getName();
+		
 		if (isDefaultWorld(name)){
 			return false;
 		}
@@ -65,25 +72,26 @@ public class API {
 			return false;
 		}
 
-		World world = plugin.getServer().getWorld(name);
-
-		if (world == null){
-			return false;
-		}
-
 		worldsConfig.set(name, null);
 
-		plugin.saveConfig();
+		plugin.saveWorldsConfig();
 
 		return true;
 	}
 
 	public WorldOptions getWorldOptions(World world){
-		return getWorldOptions(world.getName());
+		WorldOptions options = getWorldOptions(world.getName());
+		
+		options.setEnvironment(world.getEnvironment());
+		options.setGenerateStructures(world.canGenerateStructures());
+		options.setSeed(world.getSeed());
+		options.setType(world.getWorldType());
+		
+		return options;
 	}
 
 	public WorldOptions getWorldOptions(String name){
-		WorldOptions options = new WorldOptions(plugin);
+		WorldOptions options = new WorldOptions();
 
 		ConfigurationSection section = plugin.getWorldsConfig().getConfigurationSection(name);
 

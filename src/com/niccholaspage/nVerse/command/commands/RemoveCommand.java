@@ -6,14 +6,13 @@ import org.bukkit.command.CommandSender;
 
 import com.niccholaspage.nVerse.Phrase;
 import com.niccholaspage.nVerse.nVerse;
-import com.niccholaspage.nVerse.command.CommandType;
 import com.niccholaspage.nVerse.command.SubCommand;
 
 public class RemoveCommand extends SubCommand {
 	private final nVerse plugin;
 
 	public RemoveCommand(nVerse plugin) {
-		super("remove,delete", Phrase.COMMAND_GOTO, CommandType.PLAYER, "[world]");
+		super("remove,delete", Phrase.COMMAND_GOTO, "[world]");
 
 		this.plugin = plugin;
 	}
@@ -41,6 +40,8 @@ public class RemoveCommand extends SubCommand {
 		}
 		
 		plugin.getServer().unloadWorld(world, true);
+		
+		plugin.getAPI().removeWorld(world);
 		
 		Phrase.WORLD_HAS_BEEN_DELETED.sendWithPrefix(sender, world.getName());
 		
