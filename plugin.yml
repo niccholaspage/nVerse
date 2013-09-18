@@ -24,6 +24,8 @@ permissions:
     description: Allows you to remove worlds
   nVerse.command.?:
     description: Allows you to view help
+  nVerse.command.reload:
+    description: Allows you to reload the configuration
   nVerse.bypass:
     description: Allows you to bypass gamemode switches
   nVerse.command.*:
@@ -33,6 +35,7 @@ permissions:
       nVerse.command.?: true
       nVerse.command.list: true
       nVerse.command.remove: true
+      nVerse.command.reload: true
   nVerse.admin:
     children:
       nVerse.command.*: true
