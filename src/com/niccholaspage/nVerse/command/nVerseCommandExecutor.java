@@ -18,7 +18,7 @@ public class nVerseCommandExecutor implements CommandExecutor {
 	public nVerseCommandExecutor(nVerse plugin){
 		commands = new HashSet<SubCommand>();
 
-		commands.add(new CreateWorldCommand(plugin));
+		commands.add(new CreateCommand(plugin));
 		commands.add(new GotoCommand(plugin));
 		commands.add(new HelpCommand());
 		commands.add(new ListCommand(plugin));

@@ -3,6 +3,7 @@ package com.niccholaspage.nVerse.command.commands;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.World.Environment;
+import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -10,11 +11,11 @@ import com.niccholaspage.nVerse.Phrase;
 import com.niccholaspage.nVerse.nVerse;
 import com.niccholaspage.nVerse.command.SubCommand;
 
-public class CreateWorldCommand extends SubCommand {
+public class CreateCommand extends SubCommand {
 	private final nVerse plugin;
 
-	public CreateWorldCommand(nVerse plugin) {
-		super("createworld", Phrase.COMMAND_CREATEWORLD, "[name] [environment]");
+	public CreateCommand(nVerse plugin) {
+		super("create", Phrase.COMMAND_CREATE, "[name] [environment] (type)");
 
 		this.plugin = plugin;
 	}
@@ -50,10 +51,24 @@ public class CreateWorldCommand extends SubCommand {
 			
 			return true;
 		}
+		
+		WorldType type = null;
+		
+		if (args.length > 2){
+			type = WorldType.getByName(args[2]);
+			
+			if (type == null){
+				Phrase.WORLD_TYPE_DOES_NOT_EXIST.sendWithPrefix(sender);
+				
+				return true;
+			}
+		}
 
 		WorldCreator creator = new WorldCreator(name);
 		
 		creator.environment(environment);
+		
+		creator.type(type);
 		
 		world = plugin.getAPI().createWorld(creator);
 		
