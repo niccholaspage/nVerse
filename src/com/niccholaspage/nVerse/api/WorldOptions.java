@@ -15,6 +15,8 @@ public class WorldOptions {
 	private boolean keepSpawnInMemory;
 	
 	private GameMode gameMode;
+	
+	private String respawnWorld;
 
 	public WorldOptions(nVerse plugin){
 		pvp = true;
@@ -26,6 +28,8 @@ public class WorldOptions {
 		keepSpawnInMemory = true;
 		
 		gameMode = plugin.getServer().getDefaultGameMode();
+		
+		respawnWorld = "";
 	}
 
 	public void setPVP(boolean pvp){
@@ -70,5 +74,17 @@ public class WorldOptions {
 	
 	public void setGameMode(GameMode gameMode){
 		this.gameMode = gameMode;
+	}
+	
+	public String getRespawnWorld(){
+		return respawnWorld;
+	}
+	
+	public void setRespawnWorld(String respawnWorld){
+		if (respawnWorld == null){
+			respawnWorld = "";
+		}
+		
+		this.respawnWorld = respawnWorld;
 	}
 }
