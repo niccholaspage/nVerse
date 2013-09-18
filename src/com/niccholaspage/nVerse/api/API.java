@@ -15,7 +15,7 @@ public class API {
 	public API(nVerse plugin){
 		this.plugin = plugin;
 	}
-	
+
 	public void createWorld(World world){
 		createWorld(world.getName(), getWorldOptions(world));
 	}
@@ -24,9 +24,9 @@ public class API {
 		YamlConfiguration worldsConfig = plugin.getWorldsConfig();
 
 		ConfigurationSection section = worldsConfig.createSection(name);
-		
+
 		WorldCreator creator = new WorldCreator(name);
-		
+
 		creator.environment(options.getEnvironment());
 		creator.generateStructures(options.canGenerateStructures());
 		creator.seed(options.getSeed());
@@ -43,6 +43,8 @@ public class API {
 		section.set("keepspawninmemory", options.getKeepSpawnInMemory());
 		section.set("gamemode", options.getGameMode().getValue());
 		section.set("respawnworld", options.getRespawnWorld());
+		section.set("netherworld", options.getNetherWorld());
+		section.set("endworld", options.getEndWorld());
 		section.set("spawnanimals", options.getSpawnAnimals());
 		section.set("spawnmonsters", options.getSpawnMonsters());
 
@@ -61,7 +63,7 @@ public class API {
 
 	public boolean removeWorld(World world){
 		String name = world.getName();
-		
+
 		if (isDefaultWorld(name)){
 			return false;
 		}
@@ -81,12 +83,12 @@ public class API {
 
 	public WorldOptions getWorldOptions(World world){
 		WorldOptions options = getWorldOptions(world.getName());
-		
+
 		options.setEnvironment(world.getEnvironment());
 		options.setGenerateStructures(world.canGenerateStructures());
 		options.setSeed(world.getSeed());
 		options.setType(world.getWorldType());
-		
+
 		return options;
 	}
 
@@ -116,11 +118,15 @@ public class API {
 		options.setGameMode(GameMode.getByValue(section.getInt("gamemode", 0)));
 
 		options.setRespawnWorld(section.getString("respawnworld"));
-		
+
+		options.setNetherWorld(section.getString("netherworld"));
+
+		options.setEndWorld(section.getString("endworld"));
+
 		if (section.contains("spawnanimals")){
 			options.setSpawnAnimals(section.getBoolean("spawnanimals"));
 		}
-		
+
 		if (section.contains("spawnmonsters")){
 			options.setSpawnMonsters(section.getBoolean("spawnmonsters"));
 		}
