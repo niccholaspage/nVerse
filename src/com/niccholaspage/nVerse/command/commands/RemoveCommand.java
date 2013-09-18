@@ -13,7 +13,7 @@ public class RemoveCommand extends SubCommand {
 	private final nVerse plugin;
 
 	public RemoveCommand(nVerse plugin) {
-		super("remove,delete", Phrase.COMMAND_GOTO, CommandType.PLAYER, "name");
+		super("remove,delete", Phrase.COMMAND_GOTO, CommandType.PLAYER, "[world]");
 
 		this.plugin = plugin;
 	}

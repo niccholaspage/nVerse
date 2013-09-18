@@ -59,8 +59,7 @@ public class nVerseCommandExecutor implements CommandExecutor {
 
 			return true;
 		}
-
-		//TODO: Console args
+		
 		if (command.getType() == CommandType.PLAYER && !(sender instanceof Player)){
 			Phrase.COMMAND_NOT_CONSOLE.sendWithPrefix(sender, args[0].toLowerCase());
 
