@@ -84,7 +84,7 @@ public class nVerse extends JavaPlugin {
 		return worldsConfig;
 	}
 	
-	private void reloadWorldsConfig(){
+	public void reloadWorldsConfig(){
 		worldsConfig = YamlConfiguration.loadConfiguration(getWorldsFile());
 	}
 
